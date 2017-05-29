@@ -1,0 +1,34 @@
+{
+  "name": "sigfox-nodejs-callbacks",
+  "version": "1.0.0",
+  "description": "A node.js CRUD app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scotch-io/node-crud-course.git"
+  },
+  "author": "Antoine de Chassey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scotch-io/node-crud-course/issues"
+  },
+  "homepage": "https://github.com/scotch-io/node-crud-course#readme",
+  "dependencies": {
+    "body-parser": "latest",
+    "connect-flash": "latest",
+    "cookie-parser": "latest",
+    "dotenv": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "express-ejs-layouts": "latest",
+    "express-session": "latest",
+    "express-validator": "latest",
+    "mongoose": "latest",
+    "twilio": "latest",
+    "jquery": "latest",
+    "bootstrap": "3.3.7"
+  }
+}
