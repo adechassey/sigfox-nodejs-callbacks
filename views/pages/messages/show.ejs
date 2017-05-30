@@ -9,8 +9,10 @@
 <table class="table table-bordered table-hover table-striped">
     <thead>
     <tr>
-        <th>Message Name</th>
-        <th>Description</th>
+        <th>Device</th>
+        <th>Time</th>
+        <th>ContactId</th>
+        <th>Content</th>
         <th></th>
     </tr>
     </thead>
@@ -18,12 +20,13 @@
 
     <% for (var message of messages) { %>
     <tr>
-        <td><%= message.name %></td>
-        <td><%= message.description %></td>
+        <td><%= message.device %></td>
+        <td><%= new Date(message.time * 1000).toLocaleString() %></td>
+        <td><%= message.contactId %></td>
+        <td><%= message.content %></td>
         <td>
             <a href="/messages/<%= message.slug %>" class="btn btn-sm btn-primary">View</a>
-            <a href="/messages/<%= message.slug %>/edit" class="btn btn-sm btn-primary">Edit</a>
-            <a href="/messages/<%= message.slug %>/delete" class="btn btn-sm btn-danger">Delete</a>
+            <a href="/messages/delete/<%= message.slug %>" class="btn btn-sm btn-danger">Delete</a>
         </td>
     </tr>
     <% } %>

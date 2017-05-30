@@ -2,11 +2,11 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 // create a schema
-const messageSchema = new Schema({
-    device: String,
-    time: String,
+const contactSchema = new Schema({
     contactId: String,
-    content: String,
+    firstname: String,
+    lastname: String,
+    phone: String,
     slug: {
         type: String,
         unique: true
@@ -15,16 +15,16 @@ const messageSchema = new Schema({
 
 // middleware -----
 // make sure that the slug is created from the name
-messageSchema.pre('save', function (next) {
+contactSchema.pre('save', function (next) {
     this.slug = slugify(this._id);
     next();
 });
 
 // create the model
-const messageModel = mongoose.model('Message', messageSchema);
+const contactModel = mongoose.model('Contact', contactSchema);
 
 // export the model
-module.exports = messageModel;
+module.exports = contactModel;
 
 // function to slugify a name
 function slugify(text) {

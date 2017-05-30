@@ -4,14 +4,23 @@ require('dotenv').config();
 // grab our dependencies
 const express = require('express'),
     app = express(),
-    port = process.env.PORT || 8080,
+    port = process.env.PORT || 3000,
     expressLayouts = require('express-ejs-layouts'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     cookieParser = require('cookie-parser'),
     flash = require('connect-flash'),
-    expressValidator = require('express-validator');
+    expressValidator = require('express-validator'),
+    server = require('http').Server(app),
+    io = require('socket.io').listen(server);
+
+io.on('connection', function (socket) {
+    socket.emit('news', {hello: 'world'});
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+});
 
 // configure our application ===========================================================================================
 // set sessions and cookie parser
@@ -40,12 +49,13 @@ mongoose.connect(process.env.DB_URI);
 
 // use body parser to grab info from a form
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(expressValidator());
 
 // set the routes ======================================================================================================
 app.use(require('./app/routes'));
 
 // start our server ====================================================================================================
-app.listen(port, function () {
+server.listen(port, function () {
     console.log('App listening on http://localhost:' + port);
 });
