@@ -122,8 +122,8 @@ function processCreate(req, res) {
 
         contactsController.getContactByMessageId(message.contactId, function (err, contact) {
             if (contact)
-                Twilio.sendTwilio(message, contact.phone, function (result) {
-                    if (result.sid === undefined)
+                Twilio.sendTwilio(message, contact.phone, function(err, result) {
+                    if (result === undefined)
                         req.flash('error', 'But could not send message with Twilio, please verify the phone number is correct and verified on <a href="https://www.twilio.com/" target="_blank">Twilio</a>.');
                     else
                         req.flash('success', 'Successfully sent message with Twilio!'); //console.log("Twilio response: " + result.sid);
