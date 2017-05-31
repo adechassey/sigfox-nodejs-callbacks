@@ -39,7 +39,7 @@ function showContacts(req, res) {
 function showSingle(req, res) {
     // get a single contact
     Contact.findOne({slug: req.params.slug}, function (err, contact) {
-        if (err) {
+        if (err || contact == null) {
             res.status(404);
             res.send('Contact not found!');
         }
@@ -71,11 +71,11 @@ function seedContacts(req, res) {
     });
 
     if (res.statusCode == 200)
-        res.send('Database seeded!');
+        console.log('Database seeded!');
     else
-        res.send('Error occurred!');
+        console.log('Error occurred!');
 
-
+    res.redirect('/contacts');
 }
 
 /**
@@ -106,23 +106,30 @@ function processCreate(req, res) {
     }
 
     // create a new contact
-    const contact = new Contact({
+    const newContact = new Contact({
         contactId: req.body.contactId,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         phone: req.body.phone
     });
 
-    // save contact
-    contact.save(function (err) {
-        if (err)
-            throw err;
+    Contact.findOne({contactId: newContact.contactId}, function (err, contact) {
+        if (contact) {
+            req.flash('errors', 'Sorry, a contact already exists with this contactId.');
+            return res.redirect('/contacts/create');
+        } else {
+            // save contact
+            newContact.save(function (err) {
+                if (err)
+                    throw err;
 
-        // set a successful flash contact
-        req.flash('success', 'Successfully created contact!');
+                // set a successful flash contact
+                req.flash('success', 'Successfully created contact!');
 
-        // redirect to the newly created contact
-        res.redirect('/contacts/' + contact.slug);
+                // redirect to the newly created contact
+                return res.redirect('/contacts/' + newContact.slug);
+            });
+        }
     });
 }
 

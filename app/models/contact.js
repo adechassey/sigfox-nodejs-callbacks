@@ -16,7 +16,7 @@ const contactSchema = new Schema({
 // middleware -----
 // make sure that the slug is created from the name
 contactSchema.pre('save', function (next) {
-    this.slug = slugify(this._id);
+    this.slug = slugify(this.contactId);
     next();
 });
 

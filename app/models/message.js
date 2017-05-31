@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 // create a schema
 const messageSchema = new Schema({
     device: String,
-    time: String,
+    time: Date,
     contactId: String,
     content: String,
     slug: {

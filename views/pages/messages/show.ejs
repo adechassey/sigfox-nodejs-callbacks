@@ -21,7 +21,7 @@
     <% for (var message of messages) { %>
     <tr>
         <td><%= message.device %></td>
-        <td><%= new Date(message.time * 1000).toLocaleString() %></td>
+        <td><%= new Date(message.time).toLocaleString() %></td>
         <td><%= message.contactId %></td>
         <td><%= message.content %></td>
         <td>

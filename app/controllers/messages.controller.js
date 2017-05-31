@@ -36,14 +36,15 @@ function showMessages(req, res) {
 function showSingle(req, res) {
     // get a single message
     Message.findOne({slug: req.params.slug}, function (err, message) {
-        if (err) {
+        if (err || message == null) {
             res.status(404);
             res.send('Message not found!');
         }
 
         res.render('pages/messages/single', {
             message: message,
-            success: req.flash('success')
+            success: req.flash('success'),
+            error: req.flash('error')
         });
     });
 }
@@ -54,8 +55,8 @@ function showSingle(req, res) {
 function seedMessages(req, res) {
     // create some messages
     const messages = [
-        {device: "1", time: "1496156315783", contactId: '00', content: 'Super!'},
-        {device: "1", time: "1496156315783", contactId: '01', content: 'Yo.'}
+        {device: '1', time: '1496218985020', contactId: '00', content: 'Hey!'},
+        {device: '1', time: '1496156315783', contactId: '01', content: 'That\'s great'}
     ];
 
     // use the Message model to insert/save
@@ -67,9 +68,11 @@ function seedMessages(req, res) {
     });
 
     if (res.statusCode == 200)
-        res.send('Database seeded!');
+        console.log('Database seeded!');
     else
-        res.send('Error occurred!');
+        console.log('Error occurred!');
+
+    res.redirect('/messages');
 }
 
 /**
@@ -115,14 +118,18 @@ function processCreate(req, res) {
         // set a successful flash message
         req.flash('success', 'Successfully created message!');
 
-        // redirect to the newly created message
-        res.redirect('/messages/' + message.slug);
-    });
+        contactsController.getContactByMessageId(message.contactId, function (err, contact) {
+            if (contact)
+                Twilio.sendTwilio(message, contact.phone);
+            else {
+                // set an error flash message
+                req.flash('error', 'Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
+                console.error('Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
+            }
 
-    contactsController.getContactByMessageId(message.contactId, function (err, contact) {
-        console.log(contact.phone);
-        if (contact != null)
-            Twilio.sendTwilio(message, contact.phone);
+            // redirect to the newly created message
+            res.redirect('/messages/' + message.slug);
+        });
     });
 }
 

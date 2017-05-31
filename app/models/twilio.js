@@ -1,7 +1,7 @@
 require('dotenv').config();
 var twilio = require('twilio'),
-    accountSid = process.env.accountSid, // Your Account SID from www.twilio.com/console
-    authToken = process.env.authToken,    // Your Auth Token from www.twilio.com/console
+    accountSid = process.env.accountSid,
+    authToken = process.env.authToken,
     numberFrom = process.env.numberFrom,
     twilioClient = new twilio(accountSid, authToken);
 
@@ -12,8 +12,7 @@ module.exports = {
             body: newMessage.content,
             to: numberTo,  // Text this number
             from: numberFrom // From a valid Twilio number
-        }).then(
-            (message) = > console.log(message.sid);
+        }).then((message) = > console.log(message.sid);
         )
     }
 };
