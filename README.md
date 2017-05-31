@@ -1,6 +1,6 @@
-# [Sigfox](http://www.sigfox.com/) - BLE texting with [SiPy](https://www.pycom.io/product/sipy/)
+# [Sigfox](http://www.sigfox.com/) texting with [SiPy](https://www.pycom.io/product/sipy/)
 
-Wish you could send some short SMS with __no SIM card__ and from almost anywhere? Well you can...
+Wish you could send some short SMS with __no SIM card__ and from almost anywhere? Well you can with Sigfox and BLE!
 
 This repository includes:
 - the firmware to upload on the SiPy
