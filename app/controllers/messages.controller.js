@@ -96,12 +96,13 @@ function processCreate(req, res) {
     // if there are errors, redirect and save errors to flash
     const errors = req.validationErrors();
     if (errors) {
-        req.flash('errors', errors.map(err = > err.msg);
-    )
+        req.flash('errors', errors.map(function (err) {
+            return err.msg
+        }));
         return res.redirect('/messages/create');
     }
 
-    console.log(JSON.stringify(req.body));
+    console.log('Adding in DB: ' + JSON.stringify(req.body));
     // create a new message
     const message = new Message({
         device: req.body.device,
@@ -116,19 +117,26 @@ function processCreate(req, res) {
             throw err;
 
         // set a successful flash message
-        req.flash('success', 'Successfully created message!');
+        req.flash('success', 'Successfully saved message in DB!');
 
         contactsController.getContactByMessageId(message.contactId, function (err, contact) {
             if (contact)
-                Twilio.sendTwilio(message, contact.phone);
+                Twilio.sendTwilio(message, contact.phone, function (result) {
+                    console.log("Twilio response: " + result.sid);
+                    if (result.sid === undefined)
+                        req.flash('error', 'But could not send message with Twilio, please verify the phone number is correct and verified on <a href="https://www.twilio.com/" target="_blank">Twilio</a>.');
+                    else
+                        req.flash('success', 'Successfully sent message with Twilio!');
+                    // redirect to the newly created message
+                    res.redirect('/messages/' + message.slug);
+                });
             else {
+                console.error('Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
                 // set an error flash message
                 req.flash('error', 'Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
-                console.error('Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
+                // redirect to the newly created message
+                res.redirect('/messages/' + message.slug);
             }
-
-            // redirect to the newly created message
-            res.redirect('/messages/' + message.slug);
         });
     });
 }

@@ -1,7 +1,7 @@
 <% if (success.length > 0) { %>
 <div class="alert alert-success"><%= success %></div>
-<% } else if (error.length > 0) { %>
-<div class="alert alert-danger"><%= error %></div>
+<% } if (error.length > 0) { %>
+<div class="alert alert-danger"><%- error %></div>
 <% } %>
 
 <div class="jumbotron text-center">

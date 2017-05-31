@@ -58,8 +58,8 @@ function seedContacts(req, res) {
     // create some contacts
     const contacts = [
         {contactId: '00', firstname: 'Antoine', lastname: 'de Chassey', phone: '+???'},
-        {contactId: '01', firstname: 'Louis', lastname: 'Moreau', phone: '+???'},
-        {contactId: '02', firstname: 'Anthony', lastname: 'Charbonnier', phone: '+???'}
+        {contactId: '01', firstname: 'Bill', lastname: 'Gates', phone: '+???'},
+        {contactId: '02', firstname: 'Steve', lastname: 'Jobs', phone: '+???'}
     ];
 
     // use the Contact model to insert/save
@@ -100,8 +100,9 @@ function processCreate(req, res) {
     // if there are errors, redirect and save errors to flash
     const errors = req.validationErrors();
     if (errors) {
-        req.flash('errors', errors.map(err = > err.msg);
-    )
+        req.flash('errors', errors.map(function (err) {
+            return err.msg
+        }));
         return res.redirect('/contacts/create');
     }
 
@@ -124,7 +125,7 @@ function processCreate(req, res) {
                     throw err;
 
                 // set a successful flash contact
-                req.flash('success', 'Successfully created contact!');
+                req.flash('success', 'Successfully created contact!\nMake sure the phone number is valid and activated with your Twilio account!');
 
                 // redirect to the newly created contact
                 return res.redirect('/contacts/' + newContact.slug);
@@ -158,8 +159,9 @@ function processEdit(req, res) {
     // if there are errors, redirect and save errors to flash
     const errors = req.validationErrors();
     if (errors) {
-        req.flash('errors', errors.map(err = > err.msg);
-    )
+        req.flash('errors', errors.map(function (err) {
+            return err.msg
+        }));
         return res.redirect('/contacts/edit/' + req.params.slug);
     }
 

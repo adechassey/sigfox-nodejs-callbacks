@@ -45,7 +45,22 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
 // connect to our database
-mongoose.connect(process.env.DB_URI);
+var mongoURL;
+if (process.env.APP_CONFIG) { // EvenNode config
+    const config = JSON.parse(process.env.APP_CONFIG);
+    const mongoPassword = process.DB_PASSWORD;
+    mongoURL = "mongodb://" + config.mongo.user + ":" + mongoPassword + "@" + config.mongo.hostString;
+} else { // Local config
+    mongoURL = process.env.DB_URI;
+}
+// Connect to MongoDB
+mongoose.connect(mongoURL, function (err) {
+    if (!err) {
+        console.log("We are connected to MongoDB\n");
+    } else {
+        console.error("Error while connecting to MongoDB\n");
+    }
+});
 
 // use body parser to grab info from a form
 app.use(bodyParser.urlencoded({extended: true}));
