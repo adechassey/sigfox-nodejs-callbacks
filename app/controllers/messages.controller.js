@@ -176,16 +176,16 @@ function processCreateSigfox(req, res) {
                 Twilio.sendTwilio(message, contact.phone, function(err, result) {
                     if (result === undefined){
                         console.log('But could not send message with Twilio, please verify the phone number is correct and verified on <a href="https://www.twilio.com/" target="_blank">Twilio</a>.');
-                        res.send(401);
+                        res.sendStatus(401);
                     } else {
                         console.log('Successfully sent message with Twilio!');
-                        res.send(201);
+                        res.sendStatus(201);
                     }
                 });
             else {
                 console.error('Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
                 // redirect to the newly created message
-                res.send(404);
+                res.sendStatus(404);
             }
         });
     });
