@@ -68,14 +68,15 @@ function seedContacts(req, res) {
             var newContact = new Contact(contact);
             newContact.save();
         }
+        if (res.statusCode == 200)
+            console.log('Database seeded!');
+        else
+            console.log('Error occurred!');
+
+        res.redirect('/contacts');
     });
 
-    if (res.statusCode == 200)
-        console.log('Database seeded!');
-    else
-        console.log('Error occurred!');
 
-    res.redirect('/contacts');
 }
 
 /**

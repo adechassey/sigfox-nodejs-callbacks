@@ -65,14 +65,15 @@ function seedMessages(req, res) {
             var newMessage = new Message(message);
             newMessage.save();
         }
+        if (res.statusCode == 200)
+            console.log('Database seeded!');
+        else
+            console.log('Error occurred!');
+        res.redirect('/messages');
     });
 
-    if (res.statusCode == 200)
-        console.log('Database seeded!');
-    else
-        console.log('Error occurred!');
 
-    res.redirect('/messages');
+
 }
 
 /**

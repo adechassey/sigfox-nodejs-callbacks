@@ -44,17 +44,8 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
-// connect to our database
-var mongoURL;
-if (process.env.APP_CONFIG) { // EvenNode config
-    const config = JSON.parse(process.env.APP_CONFIG);
-    const mongoPassword = process.env.DB_PASSWORD;
-    mongoURL = "mongodb://" + config.mongo.user + ":" + mongoPassword + "@" + config.mongo.hostString;
-} else { // Local config
-    mongoURL = process.env.DB_URI;
-}
 // Connect to MongoDB
-mongoose.connect(mongoURL, function (err) {
+mongoose.connect(process.env.DB_URI, function (err) {
     if (!err) {
         console.log("We are connected to MongoDB\n");
     } else {
