@@ -1,6 +1,6 @@
 const Message = require('../models/message'),
-    contactsController = require('./contacts.controller'),
-    Twilio = require('../models/twilio');
+      contactsController = require('./contacts.controller'),
+      Twilio = require('../models/twilio');
 
 module.exports = {
     showMessages: showMessages,
@@ -123,11 +123,10 @@ function processCreate(req, res) {
         contactsController.getContactByMessageId(message.contactId, function (err, contact) {
             if (contact)
                 Twilio.sendTwilio(message, contact.phone, function (result) {
-                    console.log("Twilio response: " + result.sid);
                     if (result.sid === undefined)
                         req.flash('error', 'But could not send message with Twilio, please verify the phone number is correct and verified on <a href="https://www.twilio.com/" target="_blank">Twilio</a>.');
                     else
-                        req.flash('success', 'Successfully sent message with Twilio!');
+                        req.flash('success', 'Successfully sent message with Twilio!'); //console.log("Twilio response: " + result.sid);
                     // redirect to the newly created message
                     res.redirect('/messages/' + message.slug);
                 });
