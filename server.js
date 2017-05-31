@@ -48,7 +48,7 @@ app.use(expressLayouts);
 var mongoURL;
 if (process.env.APP_CONFIG) { // EvenNode config
     const config = JSON.parse(process.env.APP_CONFIG);
-    const mongoPassword = process.DB_PASSWORD;
+    const mongoPassword = process.env.DB_PASSWORD;
     mongoURL = "mongodb://" + config.mongo.user + ":" + mongoPassword + "@" + config.mongo.hostString;
 } else { // Local config
     mongoURL = process.env.DB_URI;
