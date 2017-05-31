@@ -25,7 +25,7 @@ router.get('/messages/seed', messagesController.seedMessages);
 // create message
 router.get('/messages/create', messagesController.showCreate);
 router.post('/messages/create', messagesController.processCreate);
-
+router.post('/messages/createSigfox', messagesController.processCreateSigfox);
 // delete message
 router.get('/messages/delete/:slug', messagesController.deleteMessage);
 
