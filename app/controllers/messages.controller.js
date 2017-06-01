@@ -8,8 +8,10 @@ module.exports = {
     seedMessages: seedMessages,
     showCreate: showCreate,
     processCreate: processCreate,
-    processCreateSigfox: processCreateSigfox,
-    deleteMessage: deleteMessage
+    deleteMessage: deleteMessage,
+
+    // Custom
+    processCreateSigfox: processCreateSigfox
 };
 
 /**
@@ -56,7 +58,7 @@ function showSingle(req, res) {
 function seedMessages(req, res) {
     // create some messages
     const messages = [
-        {device: '1', time: '1496218985020', contactId: '00', content: 'Hey!'},
+        {device: '1', time: '1496218985020', contactId: '00', content: 'Are you ok?'},
         {device: '1', time: '1496156315783', contactId: '01', content: 'That\'s great'}
     ];
 

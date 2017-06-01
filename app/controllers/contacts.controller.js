@@ -11,7 +11,8 @@ module.exports = {
     deleteContact: deleteContact,
 
     // Custom
-    getContactByMessageId: getContactByMessageId
+    getContactByMessageId: getContactByMessageId,
+    showContactsAndroid: showContactsAndroid
 };
 
 /**
@@ -30,6 +31,19 @@ function showContacts(req, res) {
             contacts: contacts,
             success: req.flash('success')
         });
+    });
+}
+
+function showContactsAndroid(req, res) {
+    // get all contacts
+    Contact.find({}, function (err, contacts) {
+        if (err) {
+            res.status(404);
+            res.send('Contacts not found!');
+        }
+
+        // return JSON data
+        res.send(JSON.stringify(contacts));
     });
 }
 

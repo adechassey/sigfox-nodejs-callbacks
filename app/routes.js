@@ -37,6 +37,7 @@ router.get('/messages/:slug', messagesController.showSingle);
  ************************/
 // contact routes
 router.get('/contacts', contactsController.showContacts);
+router.get('/contactsAndroid', contactsController.showContactsAndroid);
 
 // seed contacts
 router.get('/contacts/seed', contactsController.seedContacts);
