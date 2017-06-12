@@ -134,9 +134,9 @@ function processCreate(req, res) {
                     res.redirect('/messages/' + message.slug);
                 });
             else {
-                console.error('Could not send message because contact was not found with: ' + message.contactId + ' ContactId.');
+                console.error('Could not send message because contact was not found with ContactId: ' + message.contactId);
                 // set an error flash message
-                req.flash('error', 'Could not send message because contact was not found with: ' + message.contactId + ' ContactId.');
+                req.flash('error', 'Could not send message because contact was not found with ContactId: ' + message.contactId);
                 // redirect to the newly created message
                 res.redirect('/messages/' + message.slug);
             }
@@ -185,7 +185,7 @@ function processCreateSigfox(req, res) {
                     }
                 });
             else {
-                console.error('Could not send message because contact was not found with: ' + message.contactId + ' ContactId.');
+                console.error('Could not send message because contact was not found with ContactId: ' + message.contactId);
                 // redirect to the newly created message
                 res.sendStatus(404);
             }
