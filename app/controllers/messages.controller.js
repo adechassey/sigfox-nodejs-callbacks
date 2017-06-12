@@ -58,8 +58,8 @@ function showSingle(req, res) {
 function seedMessages(req, res) {
     // create some messages
     const messages = [
-        {device: '1', time: '1496218985020', contactId: '0', content: 'Are you ok?'},
-        {device: '1', time: '1496156315783', contactId: '1', content: 'That\'s great'}
+        {device: 'AD931E', time: '1496218985020', contactId: '0', content: 'Are you ok?'},
+        {device: 'AD931E', time: '1496156315783', contactId: '1', content: 'Help me!'}
     ];
 
     // use the Message model to insert/save
