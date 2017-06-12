@@ -58,8 +58,8 @@ function showSingle(req, res) {
 function seedMessages(req, res) {
     // create some messages
     const messages = [
-        {device: '1', time: '1496218985020', contactId: '00', content: 'Are you ok?'},
-        {device: '1', time: '1496156315783', contactId: '01', content: 'That\'s great'}
+        {device: '1', time: '1496218985020', contactId: '0', content: 'Are you ok?'},
+        {device: '1', time: '1496156315783', contactId: '1', content: 'That\'s great'}
     ];
 
     // use the Message model to insert/save
@@ -110,8 +110,8 @@ function processCreate(req, res) {
     // create a new message
     const message = new Message({
         device: req.body.device,
-        time: req.body.time,
-        contactId: req.body.data.slice(0, 2), // only keep the fist two bits
+        time: req.body.time * 1000, // Sigfox Backend returns Epoch Time in seconds, we have to * 1000 to convert to millis
+        contactId: parseInt(req.body.data.slice(0, 2), 16), // only keep the fist two bytes
         content: decodeURIComponent(escape(hexToASCII(req.body.data.slice(2)))) // decode the HEX message (11 bytes)
     });
 
@@ -134,9 +134,9 @@ function processCreate(req, res) {
                     res.redirect('/messages/' + message.slug);
                 });
             else {
-                console.error('Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
+                console.error('Could not send message because contact was not found with: ' + message.contactId + ' ContactId.');
                 // set an error flash message
-                req.flash('error', 'Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
+                req.flash('error', 'Could not send message because contact was not found with: ' + message.contactId + ' ContactId.');
                 // redirect to the newly created message
                 res.redirect('/messages/' + message.slug);
             }
@@ -163,8 +163,8 @@ function processCreateSigfox(req, res) {
     // create a new message
     const message = new Message({
         device: req.body.device,
-        time: req.body.time,
-        contactId: req.body.data.slice(0, 2), // only keep the fist two bits
+        time: req.body.time * 1000, // Sigfox Backend returns Epoch Time in seconds, we have to * 1000 to convert to millis
+        contactId: parseInt(req.body.data.slice(0, 2), 16), // only keep the fist two bytes
         content: decodeURIComponent(escape(hexToASCII(req.body.data.slice(2)))) // decode the HEX message (11 bytes)
     });
 
@@ -185,7 +185,7 @@ function processCreateSigfox(req, res) {
                     }
                 });
             else {
-                console.error('Could not send message because contact was not found with: ' + message.contactId + ' message ContactId.');
+                console.error('Could not send message because contact was not found with: ' + message.contactId + ' ContactId.');
                 // redirect to the newly created message
                 res.sendStatus(404);
             }

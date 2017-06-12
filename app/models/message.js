@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
 const messageSchema = new Schema({
     device: String,
     time: Date,
-    contactId: String,
+    contactId: Number,
     content: String,
     slug: {
         type: String,

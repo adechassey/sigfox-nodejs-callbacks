@@ -71,9 +71,9 @@ function showSingle(req, res) {
 function seedContacts(req, res) {
     // create some contacts
     const contacts = [
-        {contactId: '00', firstname: 'Antoine', lastname: 'de Chassey', phone: '+???'},
-        {contactId: '01', firstname: 'Bill', lastname: 'Gates', phone: '+???'},
-        {contactId: '02', firstname: 'Steve', lastname: 'Jobs', phone: '+???'}
+        {contactId: '000', firstname: 'Antoine', lastname: 'de Chassey', phone: '+???'},
+        {contactId: '001', firstname: 'Bill', lastname: 'Gates', phone: '+???'},
+        {contactId: '002', firstname: 'Steve', lastname: 'Jobs', phone: '+???'}
     ];
 
     // use the Contact model to insert/save
